@@ -5,8 +5,11 @@
     </div>
     <div class="user-description">
       <slot name="userName"></slot>
-      <router-link :to="'/user/' + userInfo.user">{{ userInfo.user }}</router-link>
-      <div class="time">{{ userInfo.time_ago || 'Joined ' + userInfo.created + ','}}
+      <router-link :to="'/user/' + userInfo.user">{{
+        userInfo.user
+      }}</router-link>
+      <div class="time">
+        {{ userInfo.time_ago || "Joined " + userInfo.created + "," }}
         <span v-if="userInfo.points">, {{ userInfo.points }} points</span>
         <slot name="userKarma"></slot>
       </div>
@@ -16,17 +19,21 @@
 
 <script>
 /* eslint-disable */
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   props: {
     userInfo: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   computed: {
     ...mapGetters([
-      'userContent', 'userQuestion', 'userName', 'userTimeAgo', 'contentPoints',
+      "userContent",
+      "userQuestion",
+      "userName",
+      "userTimeAgo",
+      "contentPoints",
     ]),
   },
 };
