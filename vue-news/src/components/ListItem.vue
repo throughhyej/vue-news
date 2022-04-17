@@ -1,6 +1,6 @@
 <template>
   <ul class="news-list">
-    <li v-for="news in listItems" :key="news.id" class="post">
+    <li v-for="news in items" :key="news.id" class="post">
       <div class="points">
         {{ news.points || 0 }}
       </div>
@@ -35,14 +35,18 @@
   </ul>
 </template>
 
-<script>
-export default {
-  computed: {
-    listItems() {
-      return this.$store.getters.fetchedList;
+<script lang="ts">
+import { INewsItem } from "@/api";
+import Vue, { PropType } from "vue";
+
+export default Vue.extend({
+  props: {
+    items: {
+      type: Array as PropType<INewsItem[]>,
+      required: true,
     },
   },
-};
+});
 </script>
 
 <style scoped>
