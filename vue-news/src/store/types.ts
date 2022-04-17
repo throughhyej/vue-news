@@ -1,5 +1,6 @@
 import { CommitOptions, DispatchOptions, Store } from "vuex";
 import { Actions } from "./actions";
+import { Getters } from "./getters";
 import { Mutations } from "./mutations";
 import { RootState } from "./state";
 
@@ -12,6 +13,7 @@ type MyMutations = {
   ): ReturnType<Mutations[K]>;
 };
 
+// dispatch: custom type
 type MyActions = {
   dispatch<K extends keyof Actions>(
     key: K,
@@ -20,8 +22,19 @@ type MyActions = {
   ): ReturnType<Actions[K]>;
 };
 
-// Omit: RootState의 "commit, dispatch" 제외하고는 사용
-// &: Omit 데이터와 MyMutations, MyActions (custom)의 합집합
-export type MyStore = Omit<Store<RootState>, "commit" | "dispatch"> &
+// getters: custom type
+type MyGetters = {
+  getters: {
+    [K in keyof Getters]: ReturnType<Getters[K]>;
+  };
+};
+
+// Omit: RootState의 "getters, commit, dispatch" 제외하고는 사용
+// &: Omit 데이터와 MyGetters, MyMutations, MyActions (custom)의 합집합
+export type MyStore = Omit<
+  Store<RootState>,
+  "getters" | "commit" | "dispatch"
+> &
   MyMutations &
-  MyActions;
+  MyActions &
+  MyGetters;
